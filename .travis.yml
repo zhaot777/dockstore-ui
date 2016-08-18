@@ -24,7 +24,7 @@ install:
   - 'bower update'
 
 before_script:
-  - grunt test --silent & #make sure it runs the server first before testing
+  - grunt serve --silent & #make sure it runs the server first before testing
   
 script: 
   - cypress ci #test using cypress for integration testing
