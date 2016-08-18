@@ -6,7 +6,7 @@
 describe('dockstore homepage', function() {
 
 	beforeEach(function () {
-		cy.visit("http://localhost:9001");
+		cy.visit("http://localhost:9000");
 	});
 
 	it('cy.should - assert that <title> is correct', function() {
