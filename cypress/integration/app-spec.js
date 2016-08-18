@@ -5,12 +5,13 @@
 
 describe('dockstore homepage', function() {
 
-  beforeEach(function () {
-    browser.ignoreSynchronization = true; //to avoid error angular is not found --> could be because of syncing problem
-    browser.get('index.html');
-  });
+	beforeEach(function () {
+		
+	});
 
-	it('should automatically redirect to / when location hash is empty', function() {
+	it('cy.should - assert that <title> is correct', function() {
+		cy.visit("http://10.0.29.14:9001/index.html");
+		cy.title().should('include', 'Dockstore');
 	  // ignoring for now, not working in combination with API display
 		//expect(browser.getLocationAbsUrl()).toMatch("/");
 	});
