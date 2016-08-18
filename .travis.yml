@@ -24,6 +24,7 @@ install:
   - 'bower update'
 
 before_script:
+  - grunt # this does syntax checking, unit testing, and jshint
   - grunt serve --silent & #make sure it runs the server first before testing
   
 script: 
