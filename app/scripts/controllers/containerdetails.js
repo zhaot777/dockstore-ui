@@ -96,7 +96,8 @@ angular.module('dockstore.ui')
       };
 
       $scope.showLaunchWith = function() {
-        if($scope.containerObj.tags.length === 0 || $scope.validTags.length === 0){
+        if($scope.containerObj.tags.length === 0 || 
+          $scope.validTags.length === 0){
           //no tags available in the container, do not show launchWith
           //return false immediately to get out of this method
           return false; 
@@ -139,11 +140,11 @@ angular.module('dockstore.ui')
         //get rid of blank option in descriptor dropdown if exists
         if(document.getElementById('descType')[0].value === '?' || 
           document.getElementById('descType')[0].value === ''){
-          var nestedfirstElement = $scope.descAvailable[0];
+          var firstElementDesc = $scope.descAvailable[0];
           var descriptorAvailable = $scope.descAvailable;
 
           $("#descType option").filter(function(){
-            return $(this).text() === nestedfirstElement;
+            return $(this).text() === firstElementDesc;
           }).attr('selected',true);
           $("#descType option").filter(function(){
             return window.jQuery.inArray($(this).text(),descriptorAvailable) === -1;
