@@ -57,10 +57,12 @@ angular.module('dockstore.ui')
 
       $scope.$watch('searchQueryContainer', function(newValue, oldValue) {
         $rootScope.searchQueryContainer = newValue;
+        $location.search('search', newValue);
       });
 
       $scope.$watch('searchQueryWorkflow', function(newValue, oldValue) {
         $rootScope.searchQueryWorkflow = newValue;
+        $location.search('search', newValue);
       });
 
       $scope.$on('$routeChangeStart', function(event, next, current) {

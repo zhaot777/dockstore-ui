@@ -68,29 +68,22 @@ angular.module('dockstore.ui')
           );
       }
 
-      if ($routeParams.searchQueryContainer) {
-        $rootScope.searchQueryContainer = $routeParams.searchQueryContainer;
+      if (($location.search()).search) {
+        $rootScope.searchQueryContainer = ($location.search()).search;
+      } else {
+        $rootScope.searchQueryContainer = '';
       }
 
       $scope.$watch('searchQueryContainer', function(newValue, oldValue) {
-              $rootScope.searchQueryContainer = newValue;
-            });
+        $rootScope.searchQueryContainer = newValue;
+        $location.search('search', newValue);
+      });
 
-            $scope.$watch('searchQueryWorkflow', function(newValue, oldValue) {
-              $rootScope.searchQueryWorkflow = newValue;
-            });
-
-            $scope.$on('$routeChangeStart', function(event, next, current) {
-              if ($location.url().indexOf('/search-containers') === -1) {
-                $scope.searchQueryContainer = '';
-              }
-            });
-
-            $scope.$on('$routeChangeStart', function(event, next, current) {
-              if ($location.url().indexOf('/search-workflows') === -1) {
-                $scope.searchQueryWorkflow = '';
-              }
-            });
+      $scope.$on('$routeChangeStart', function(event, next, current) {
+        if ($location.url().indexOf('/search-containers') === -1) {
+          $scope.searchQueryContainer = '';
+        }
+      });
 
       $scope.listPublishedContainers();
 

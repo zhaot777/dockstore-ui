@@ -68,22 +68,17 @@ angular.module('dockstore.ui')
           );
       }
 
-      if ($routeParams.searchQueryWorkflow) {
-        $rootScope.searchQueryWorkflow = $routeParams.searchQueryWorkflow;
+      if (($location.search()).search) {
+        $rootScope.searchQueryWorkflow = ($location.search()).search;
+      } else {
+        $rootScope.searchQueryWorkflow = '';
       }
-
-$scope.$watch('searchQueryContainer', function(newValue, oldValue) {
-        $rootScope.searchQueryContainer = newValue;
-      });
 
       $scope.$watch('searchQueryWorkflow', function(newValue, oldValue) {
         $rootScope.searchQueryWorkflow = newValue;
-      });
+        $location.search('search', newValue);
+              $("#workflowSearch").focus();
 
-      $scope.$on('$routeChangeStart', function(event, next, current) {
-        if ($location.url().indexOf('/search-containers') === -1) {
-          $scope.searchQueryContainer = '';
-        }
       });
 
       $scope.$on('$routeChangeStart', function(event, next, current) {
