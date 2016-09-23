@@ -1,19 +1,3 @@
-/*
- *    Copyright 2016 OICR
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *        http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
- */
-
 'use strict';
 
 /**
@@ -36,8 +20,8 @@ angular.module('dockstore.ui')
     'UserService',
     'TokenService',
     'NotificationService',
-    function ($scope, $rootScope, $q, $window, $location, $auth, $routeParams,
-        ContainerService, UserService, TokenService, NtfnService) {
+    function($scope, $rootScope, $q, $window, $location, $auth, $routeParams,
+      ContainerService, UserService, TokenService, NtfnService) {
 
       $scope.userObj = UserService.getUserObj();
 
@@ -46,11 +30,12 @@ angular.module('dockstore.ui')
           .then(
             function(containers) {
               $scope.containers = containers;
-              console.log($scope.containers);
+
+              // console.log($scope.containers);
             },
             function(response) {
               var message = '[HTTP ' + response.status + '] ' +
-                  response.statusText + ': ' + response.data;
+                response.statusText + ': ' + response.data;
               NtfnService.popError('List Published Containers', message);
               return $q.reject(response);
             }
@@ -61,12 +46,15 @@ angular.module('dockstore.ui')
         return ContainerService.getCrossSitePublishedContainerList()
           .then(
             function(containers) {
-              console.log(containers);
+              for(var i = 0; i < containers.length; i++) {
+                containers[i]["isRemoteTool"] = true;
+              }
+              console.log(containers[0].isRemoteTool);
               $scope.containers = $.merge($scope.containers, containers);
             },
             function(response) {
               var message = '[HTTP ' + response.status + '] ' +
-                  response.statusText + ': ' + response.data;
+                response.statusText + ': ' + response.data;
               NtfnService.popError('List Published Containers', message);
               return $q.reject(response);
             }
@@ -90,28 +78,29 @@ angular.module('dockstore.ui')
       }
 
       $scope.$watch('searchQueryContainer', function(newValue, oldValue) {
-              $rootScope.searchQueryContainer = newValue;
-            });
+        $rootScope.searchQueryContainer = newValue;
+      });
 
-            $scope.$watch('searchQueryWorkflow', function(newValue, oldValue) {
-              $rootScope.searchQueryWorkflow = newValue;
-            });
+      $scope.$watch('searchQueryWorkflow', function(newValue, oldValue) {
+        $rootScope.searchQueryWorkflow = newValue;
+      });
 
-            $scope.$on('$routeChangeStart', function(event, next, current) {
-              if ($location.url().indexOf('/search-containers') === -1) {
-                $scope.searchQueryContainer = '';
-              }
-            });
+      $scope.$on('$routeChangeStart', function(event, next, current) {
+        if ($location.url().indexOf('/search-containers') === -1) {
+          $scope.searchQueryContainer = '';
+        }
+      });
 
-            $scope.$on('$routeChangeStart', function(event, next, current) {
-              if ($location.url().indexOf('/search-workflows') === -1) {
-                $scope.searchQueryWorkflow = '';
-              }
-            });
+      $scope.$on('$routeChangeStart', function(event, next, current) {
+        if ($location.url().indexOf('/search-workflows') === -1) {
+          $scope.searchQueryWorkflow = '';
+        }
+      });
 
       $scope.listPublishedContainers();
       $scope.listCrossSitePublishedContainers();
-      
+
       $("#toolSearch").focus();
 
-  }]);
+    }
+  ]);
